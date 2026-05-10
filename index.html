@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On Point Barbershop – Yuma, AZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0d0c0a;
+    --offwhite: #f5f0e8;
+    --cream: #ede7d9;
+    --gold: #c8982a;
+    --gold-light: #e8b84b;
+    --red: #9e2a1c;
+    --mid: #2a2520;
+    --text-muted: #8a7f70;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--offwhite);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(13,12,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,152,42,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--offwhite);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    opacity: 1 !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--gold-light) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(200,152,42,0.08) 0%, transparent 70%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(200,152,42,0.02) 40px,
+        rgba(200,152,42,0.02) 41px
+      );
+  }
+
+  .hero-line {
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(200,152,42,0.3) 30%, rgba(200,152,42,0.3) 70%, transparent);
+    transform: translateX(-50%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 860px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--offwhite);
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+
+  .hero-title span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    margin: 2rem 0 3rem;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    text-decoration: none;
+    padding: 1rem 2.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    border: 1px solid rgba(200,152,42,0.4);
+    color: var(--offwhite);
+    text-decoration: none;
+    padding: 1rem 2.5rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); background: rgba(200,152,42,0.06); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s 1.4s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .scroll-dot {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 1.8s ease-in-out infinite;
+  }
+
+  /* ── STRIP ── */
+  .marquee-strip {
+    background: var(--gold);
+    padding: 0.75rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-flex;
+    gap: 3rem;
+    animation: marquee 20s linear infinite;
+  }
+
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    color: var(--black);
+  }
+
+  .marquee-dot {
+    color: rgba(13,12,10,0.4);
+  }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 6rem 2rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    letter-spacing: 0.03em;
+    line-height: 0.95;
+    color: var(--offwhite);
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-box {
+    background: var(--mid);
+    border: 1px solid rgba(200,152,42,0.15);
+    aspect-ratio: 4/5;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .about-box-inner {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .scissors-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: sepia(1) saturate(2) hue-rotate(10deg) brightness(0.7);
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    background: var(--gold);
+    color: var(--black);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  .about-badge .big { font-size: 2rem; line-height: 1; }
+  .about-badge .small { font-size: 0.6rem; letter-spacing: 0.1em; }
+
+  .about-text p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+  }
+
+  .about-text p strong {
+    color: var(--offwhite);
+    font-weight: 500;
+  }
+
+  /* ── SERVICES ── */
+  .services-section {
+    background: var(--mid);
+    border-top: 1px solid rgba(200,152,42,0.1);
+    border-bottom: 1px solid rgba(200,152,42,0.1);
+  }
+
+  .services-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(200,152,42,0.1);
+    border: 1px solid rgba(200,152,42,0.1);
+  }
+
+  .service-card {
+    background: var(--mid);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.25s;
+  }
+
+  .service-card:hover { background: #32291f; }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--offwhite);
+    margin-bottom: 0.75rem;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .service-price {
+    position: absolute;
+    top: 2.5rem;
+    right: 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── HOURS ── */
+  .hours-section {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hours-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 3.5rem;
+  }
+
+  .hours-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .hours-table tr {
+    border-bottom: 1px solid rgba(200,152,42,0.08);
+  }
+
+  .hours-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .hours-table td {
+    padding: 1rem 0;
+    font-size: 1rem;
+  }
+
+  .hours-table .day {
+    color: var(--offwhite);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+
+  .hours-table .time {
+    color: var(--text-muted);
+    text-align: right;
+    font-weight: 300;
+  }
+
+  .hours-table .today .day { color: var(--gold); font-weight: 500; }
+  .hours-table .today .time { color: var(--gold-light); }
+
+  .open-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(200,152,42,0.12);
+    border: 1px solid rgba(200,152,42,0.25);
+    color: var(--gold);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border-radius: 2px;
+    margin-top: 1.5rem;
+  }
+
+  .open-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .location-card {
+    background: var(--mid);
+    border: 1px solid rgba(200,152,42,0.15);
+    border-radius: 2px;
+    padding: 2.5rem;
+  }
+
+  .location-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .location-addr {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    color: var(--offwhite);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .location-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+
+  .location-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(200,152,42,0.1);
+    border: 1px solid rgba(200,152,42,0.2);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .map-embed {
+    width: 100%;
+    height: 200px;
+    border: 1px solid rgba(200,152,42,0.15);
+    border-radius: 2px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+  }
+
+  .map-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    filter: grayscale(100%) invert(90%) contrast(0.9) brightness(0.8);
+  }
+
+  .map-link {
+    display: block;
+    margin-top: 1rem;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .map-link:hover { color: var(--gold-light); }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: var(--gold);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+
+  .cta-band .section-title { color: var(--black); }
+
+  .cta-band p {
+    color: rgba(13,12,10,0.6);
+    margin: 1.25rem 0 2.5rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+  }
+
+  .btn-dark {
+    background: var(--black);
+    color: var(--gold);
+    text-decoration: none;
+    padding: 1rem 2.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-dark:hover { background: #1a1714; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(200,152,42,0.1);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(138,127,112,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1.5rem 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .about-badge { right: 1rem; }
+
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { padding: 2rem 1.5rem; }
+
+    .hours-layout { grid-template-columns: 1fr; gap: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">On Point</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#hours">Hours</a></li>
+    <li><a href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjQqr796K-UAxUAAAAAHQAAAAAQJA..i&sca_esv=af156264804c4707&udm=1&pvq=OhYweDA6MHhjY2I0NThkYjVkOWIxMTU5&fvr=1&cs=0&um=1&ie=UTF-8&fb=1&gl=us&sa=X&ftid=0x80d658ade984131f:0xccb458db5d9b1159" target="_blank" class="nav-cta">Directions</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Yuma, Arizona</div>
+    <h1 class="hero-title">
+      On
+      <span>Point</span>
+      Barbershop
+    </h1>
+    <p class="hero-subtitle">
+      Precision cuts. Sharp fades. Classic craft — open every day of the week.
+    </p>
+    <div class="hero-ctas">
+      <a href="#hours" class="btn-primary">Hours & Location</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-item">Precision Cuts</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Fresh Fades</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Beard Trims</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Open 7 Days</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Yuma, Arizona</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Precision Cuts</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Fresh Fades</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Beard Trims</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Open 7 Days</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Yuma, Arizona</span>
+    <span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-visual">
+      <div class="about-box">
+        <div class="about-box-inner">
+          <!-- Barber pole SVG -->
+          <svg width="80" height="140" viewBox="0 0 80 140" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1rem;">
+            <rect x="30" y="0" width="20" height="140" rx="10" fill="#2a2520"/>
+            <clipPath id="pole-clip">
+              <rect x="30" y="0" width="20" height="140" rx="10"/>
+            </clipPath>
+            <g clip-path="url(#pole-clip)">
+              <rect x="30" y="0" width="20" height="140" fill="#1e1a16"/>
+              <rect x="28" y="-10" width="7" height="160" fill="#c8982a" transform="rotate(-35,40,70)"/>
+              <rect x="38" y="-10" width="7" height="160" fill="#f5f0e8" transform="rotate(-35,40,70)"/>
+              <rect x="48" y="-10" width="7" height="160" fill="#9e2a1c" transform="rotate(-35,40,70)"/>
+              <rect x="58" y="-10" width="7" height="160" fill="#c8982a" transform="rotate(-35,40,70)"/>
+            </g>
+            <ellipse cx="40" cy="4" rx="12" ry="5" fill="#c8982a" opacity="0.6"/>
+            <ellipse cx="40" cy="136" rx="12" ry="5" fill="#c8982a" opacity="0.6"/>
+          </svg>
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:var(--gold); opacity:0.5;">Since Day One</p>
+        </div>
+      </div>
+      <div class="about-badge">
+        <span class="big">★</span>
+        <span class="small">Yuma's<br>Best</span>
+      </div>
+    </div>
+
+    <div class="about-text">
+      <p class="section-label">About Us</p>
+      <h2 class="section-title">Your look,<br>on point.</h2>
+      <div class="divider"></div>
+      <p>At <strong>On Point Barbershop</strong>, we believe every haircut is a chance to feel your best. Located right here in Yuma, AZ, we bring skill, consistency, and a welcoming vibe to every chair.</p>
+      <p>Whether you're coming in for a <strong>fresh fade</strong>, a classic taper, a beard shaping, or just a clean up before an important day — our barbers deliver every time. No appointments needed, just walk right in.</p>
+      <p>We're <strong>open seven days a week</strong> because we know life doesn't take weekends off.</p>
+      <a href="#services" class="btn-primary" style="margin-top:1rem;">View Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="services-inner">
+    <div class="services-header">
+      <div>
+        <p class="section-label">What We Offer</p>
+        <h2 class="section-title">Our Services</h2>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem; max-width:300px; text-align:right; font-weight:300; line-height:1.7;">
+        Walk-ins welcome. No appointment needed.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-price">$</div>
+        <div class="service-name">Haircut</div>
+        <p class="service-desc">Classic, taper, or modern — shaped and finished to your exact style.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-price">$</div>
+        <div class="service-name">Fade</div>
+        <p class="service-desc">High, mid, low, or skin — precision fades that last and look sharp.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-price">$</div>
+        <div class="service-name">Beard Trim</div>
+        <p class="service-desc">Defined lines, clean edges, and a shape that flatters your face.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-price">$</div>
+        <div class="service-name">Kids Cut</div>
+        <p class="service-desc">Patient, friendly service for the little ones. Quick and clean every time.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-price">$</div>
+        <div class="service-name">Line Up</div>
+        <p class="service-desc">Crisp edge work to keep your look fresh between full cuts.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-price">$</div>
+        <div class="service-name">Cut + Beard</div>
+        <p class="service-desc">Full service combo — haircut and beard trim together for a complete look.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS & LOCATION -->
+<section id="hours">
+  <div class="hours-section">
+    <p class="section-label">We're Here For You</p>
+    <h2 class="section-title">Hours &<br>Location</h2>
+    <div class="hours-layout">
+      <div>
+        <table class="hours-table" id="hours-table">
+          <tr><td class="day">Sunday</td><td class="time">9:00 AM – 5:00 PM</td></tr>
+          <tr><td class="day">Monday</td><td class="time">9:00 AM – 5:00 PM</td></tr>
+          <tr><td class="day">Tuesday</td><td class="time">9:00 AM – 6:00 PM</td></tr>
+          <tr><td class="day">Wednesday</td><td class="time">9:00 AM – 6:00 PM</td></tr>
+          <tr><td class="day">Thursday</td><td class="time">9:00 AM – 6:00 PM</td></tr>
+          <tr><td class="day">Friday</td><td class="time">9:00 AM – 7:00 PM</td></tr>
+          <tr><td class="day">Saturday</td><td class="time">9:00 AM – 7:00 PM</td></tr>
+        </table>
+
+        <div class="open-badge" id="status-badge">
+          <div class="open-dot" id="status-dot"></div>
+          <span id="status-text">Checking hours...</span>
+        </div>
+      </div>
+
+      <div class="location-card">
+        <p class="location-label">Find Us In Yuma</p>
+        <p class="location-addr">On Point<br>Barbershop<br>Yuma, AZ</p>
+
+        <div class="location-detail">
+          <div class="location-icon">📍</div>
+          <span>Yuma, Arizona</span>
+        </div>
+        <div class="location-detail">
+          <div class="location-icon">🕐</div>
+          <span>Open 7 days a week</span>
+        </div>
+        <div class="location-detail">
+          <div class="location-icon">✂️</div>
+          <span>Walk-ins welcome</span>
+        </div>
+
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3346.9!2d-114.6289!3d32.6927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d658ade984131f%3A0xccb458db5d9b1159!2sOn%20Point%20Barbershop!5e0!3m2!1sen!2sus!4v1"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="On Point Barbershop location">
+          </iframe>
+        </div>
+        <a
+          href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjQqr796K-UAxUAAAAAHQAAAAAQJA..i&sca_esv=af156264804c4707&udm=1&pvq=OhYweDA6MHhjY2I0NThkYjVkOWIxMTU5&fvr=1&cs=0&um=1&ie=UTF-8&fb=1&gl=us&sa=X&ftid=0x80d658ade984131f:0xccb458db5d9b1159"
+          target="_blank"
+          class="map-link"
+        >Get Directions →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <h2 class="section-title">Walk in.<br>Look sharp.</h2>
+  <p>No appointment necessary. Just show up — we've got you covered.</p>
+  <a href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjQqr796K-UAxUAAAAAHQAAAAAQJA..i&sca_esv=af156264804c4707&udm=1&pvq=OhYweDA6MHhjY2I0NThkYjVkOWIxMTU5&fvr=1&cs=0&um=1&ie=UTF-8&fb=1&gl=us&sa=X&ftid=0x80d658ade984131f:0xccb458db5d9b1159" target="_blank" class="btn-dark">Get Directions</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">On Point Barbershop</div>
+  <p class="footer-tagline">Yuma, Arizona · Open 7 Days</p>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#hours">Hours</a></li>
+    <li><a href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjQqr796K-UAxUAAAAAHQAAAAAQJA..i&sca_esv=af156264804c4707&udm=1&pvq=OhYweDA6MHhjY2I0NThkYjVkOWIxMTU5&fvr=1&cs=0&um=1&ie=UTF-8&fb=1&gl=us&sa=X&ftid=0x80d658ade984131f:0xccb458db5d9b1159" target="_blank">Directions</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 On Point Barbershop · Yuma, AZ</p>
+</footer>
+
+<script>
+  // Highlight today's hours and show open/closed status
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const closeHours = [17,17,18,18,18,19,19]; // closing hour for each day
+
+  const now = new Date();
+  const dayIdx = now.getDay();
+  const hour = now.getHours();
+  const openHour = 9;
+
+  const rows = document.querySelectorAll('#hours-table tr');
+  rows[dayIdx].classList.add('today');
+
+  const badge = document.getElementById('status-badge');
+  const dot = document.getElementById('status-dot');
+  const txt = document.getElementById('status-text');
+  const isOpen = hour >= openHour && hour < closeHours[dayIdx];
+
+  if (isOpen) {
+    txt.textContent = 'Open Now · Closes ' + (closeHours[dayIdx] > 12 ? (closeHours[dayIdx]-12)+'PM' : closeHours[dayIdx]+'AM');
+    badge.style.background = 'rgba(46,160,67,0.12)';
+    badge.style.borderColor = 'rgba(46,160,67,0.3)';
+    badge.style.color = '#4ac26b';
+    dot.style.background = '#4ac26b';
+  } else {
+    txt.textContent = 'Closed · Opens Tomorrow at 9 AM';
+    badge.style.background = 'rgba(200,152,42,0.08)';
+    badge.style.borderColor = 'rgba(200,152,42,0.2)';
+    badge.style.color = 'var(--text-muted)';
+    dot.style.background = 'var(--text-muted)';
+    dot.style.animation = 'none';
+  }
+</script>
+</body>
+</html>
